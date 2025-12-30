@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sftpgo
+  namespace: sftpgo
+spec:
+  interval: 5m
+
+  chart:
+    spec:
+      chart: sftpgo
+      version: "*"
+      sourceRef:
+        kind: HelmRepository
+        name: sftpgo
+        namespace: flux-system
+
+  values:
+    replicaCount: 1
+
+    image:
+      repository: drakkan/sftpgo
+      tag: latest
+
+    service:
+      type: ClusterIP
+      ports:
+        sftp: 2022
+        http: 8080
+
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: standard
+
+    env:
+      SFTPGO_HTTPD__BINDINGS__0__PORT: "8080"
+      SFTPGO_SFTPD__BINDINGS__0__PORT: "2022"
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
