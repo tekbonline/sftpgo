@@ -33,7 +33,7 @@ spec:
           targetPort: 8080
 
     persistence:
-      enabled: true
+      enabled: false
       size: 10Gi
       storageClass: standard
 
