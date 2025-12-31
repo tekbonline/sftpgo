@@ -25,8 +25,12 @@ spec:
     service:
       type: ClusterIP
       ports:
-        sftp: 2022
-        http: 8080
+        sftp:
+          port: 2022
+          targetPort: 2022
+        http:
+          port: 8080
+          targetPort: 8080
 
     persistence:
       enabled: true
